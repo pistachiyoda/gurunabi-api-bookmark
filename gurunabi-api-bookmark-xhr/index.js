@@ -9,7 +9,7 @@
 // サーチメソッドは店クラスのインスタンスの配列を返す
 // 店クラスの定義
 
-const API_KEY = "API KEYを入力";
+const API_KEY = "ぐるなびAPI KEYを入力";
 
 // キーワードでの検索結果を表示する
 const button = document.getElementById("searchButton");
@@ -57,6 +57,9 @@ class GurunabiAPI {
   // リクエスト処理をするメソッド
   sendRequest(url, callback) {
     const request = new XMLHttpRequest();
+    // 順番的にはopen->send->onload
+    // onloadだとレスポンスに対しての処理をコールバック関数で渡さないといけない
+    // onloadを先に書いておかないと、onloadが登録される前にsendに対するレスポンスが返ってきてしまいonloadが実行されないかのうせいがある
     request.onload = function() {
       let res = JSON.parse(request.responseText);
       let restaurants = [];
